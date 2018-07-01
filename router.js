@@ -21,8 +21,8 @@ var timer = require('./timer');
 // define the about route
 router.post('/startTimer', function (req, res) {
     var teamVal = req.body.Team;
-    timer.startTimer(teamVal);
-    res.send('About birds');
+    var obj = timer.startTimer(teamVal);
+    res.send(JSON.stringify(obj));
 });
 
 module.exports = router;

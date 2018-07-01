@@ -4,7 +4,7 @@ function timeObject (teamName) {
     this.teamName = teamName;
     this.isStarted = false;
     this.timerStartedAt = null;
-    this.elapsedTimeInSeconds = null;
+    this.elapsedTimeInSeconds = 0;
 }
 
 var redTimer = null;
@@ -44,7 +44,8 @@ var startTimerForTeam = function (teamName) {
         teamTimerObject.isStarted = true;
         teamTimerObject.timerStartedAt = Date.now();
     } else {
-        teamTimerObject.elapsedTimeInSeconds += getTimeDifferenceInSeconds(teamTimerObject.timerStartedAt);
+        teamTimerObject.elapsedTimeInSeconds = getTimeDifferenceInSeconds(teamTimerObject.timerStartedAt);
     }    
     console.info(JSON.stringify(teamTimerObject));
+    return teamTimerObject;
 };
