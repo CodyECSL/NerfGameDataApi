@@ -1,15 +1,15 @@
 var timer = null;
+var redTimer = null;
+var blueTimer = null;
 const intervalRefreshValue = 1000;
 
+// Constructor for a timeObject
 function timeObject (teamName) {
     this.teamName = teamName;
     this.isActive = false;
     this.timerStartedAt = null;
     this.elapsedTimeInSeconds = 0;
 }
-
-var redTimer = null;
-var blueTimer = null;
 
 module.exports = {
     startTimer: function (teamName) {
