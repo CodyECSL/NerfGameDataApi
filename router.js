@@ -18,7 +18,22 @@ var timer = require('./timer');
 //     res.sendFile(path + "contact.html");
 // });
 
-// define the about route
+router.get("/red",function(req,res){
+    var obj = JSON.stringify(timer.getRedTeamTimer());
+    res.send(obj);
+});
+
+router.get("/blue",function(req,res){
+    var obj = JSON.stringify(timer.getBlueTeamTimer());
+    res.send(obj);
+});
+
+router.get('/startTimer/:Team', function (req, res) {
+    var teamVal = req.params.Team;
+    var obj = timer.startTimer(teamVal);
+    res.send(JSON.stringify(obj));
+});
+
 router.post('/startTimer', function (req, res) {
     var teamVal = req.body.Team;
     var obj = timer.startTimer(teamVal);

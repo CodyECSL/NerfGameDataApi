@@ -1,8 +1,9 @@
 var timer = null;
+const intervalRefreshValue = 1000;
 
 function timeObject (teamName) {
     this.teamName = teamName;
-    this.isStarted = false;
+    this.isActive = false;
     this.timerStartedAt = null;
     this.elapsedTimeInSeconds = 0;
 }
@@ -14,6 +15,12 @@ module.exports = {
     startTimer: function (teamName) {
         init();
         return startTimerForTeam(teamName);
+    },
+    getRedTeamTimer: function() {
+        return redTimer;
+    },
+    getBlueTeamTimer: function() {
+        return blueTimer;
     }
 };
 
@@ -36,16 +43,39 @@ var getTimeDifferenceInSeconds = function (time) {
     return diff;
 };
 
+// TO DO: Break apart this function.  It's doing too many actions.
 var startTimerForTeam = function (teamName) {
-    var teamTimerObject = teamName == 'Red' ? redTimer : blueTimer;
+    var activeTimerObject = null;
+    var alternateTimerObject = null;
 
-    if (!teamTimerObject.isStarted)
-    {
-        teamTimerObject.isStarted = true;
-        teamTimerObject.timerStartedAt = Date.now();
+    if (teamName == 'Red') {
+        activeTimerObject = redTimer;
+        alternateTimerObject = blueTimer;
     } else {
-        teamTimerObject.elapsedTimeInSeconds = getTimeDifferenceInSeconds(teamTimerObject.timerStartedAt);
-    }    
-    console.info(JSON.stringify(teamTimerObject));
-    return teamTimerObject;
+        activeTimerObject = blueTimer;
+        alternateTimerObject = redTimer;
+    }
+
+    if (!activeTimerObject.isActive)
+    {
+        activeTimerObject.isActive = true;
+        activeTimerObject.timerStartedAt = Date.now();
+        startTimerInterval(activeTimerObject);  
+    }
+    alternateTimerObject.isActive = false;
+    return activeTimerObject;
+};
+
+var startTimerInterval = function (teamTimerObject) {
+    var interval = setInterval(function () {
+        console.info(teamTimerObject);
+        if (teamTimerObject.isActive) {
+            // This isn't the most accurate way of tracking elapsed time
+            // but is sufficient for now. 
+            teamTimerObject.elapsedTimeInSeconds++; 
+        } else {
+            console.info("Stopping timer for team: " + teamTimerObject.teamName);
+            clearInterval(interval);
+        }
+    }, intervalRefreshValue);
 };
