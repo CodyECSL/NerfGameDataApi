@@ -1,8 +1,14 @@
 var timer = null;
+
+/* TODO: Currently using 2 hardcoded timer objects.  Need to make
+// a "TeamsArray[]" that can be iterated through.  By default, 
+// Red and Blue Team Timers can be added along with others later. */
 var redTimer = null;
 var blueTimer = null;
+
 const intervalRefreshValue = 1000;
 
+// TODO: Rename this object
 // Constructor for a timeObject
 function timeObject (teamName) {
     this.teamName = teamName;
@@ -21,6 +27,9 @@ module.exports = {
     },
     getBlueTeamTimer: function() {
         return blueTimer;
+    },
+    resetAndStopTimers: function() {
+        return resetAndStopTimers();
     }
 };
 
@@ -34,7 +43,7 @@ var init = function () {
 };
 
 var getTimeInSeconds = function (time) {
-    console.info("getting time in sec for: " + time);
+    console.info(`getting time in sec for: ${time}`);
     return time / 1000;
 };
 
@@ -68,14 +77,28 @@ var startTimerForTeam = function (teamName) {
 
 var startTimerInterval = function (teamTimerObject) {
     var interval = setInterval(function () {
-        console.info(teamTimerObject);
         if (teamTimerObject.isActive) {
+            console.info(teamTimerObject);
             // This isn't the most accurate way of tracking elapsed time
             // but is sufficient for now. 
             teamTimerObject.elapsedTimeInSeconds++; 
         } else {
-            console.info("Stopping timer for team: " + teamTimerObject.teamName);
+            console.info(`Stopping timer for team: ${teamTimerObject.teamName}`);
             clearInterval(interval);
         }
     }, intervalRefreshValue);
+};
+
+// TODO: Rename
+var resetAndStopTimers = function () {
+    try {
+        redTimer.isActive = false;
+        redTimer.elapsedTimeInSeconds = 0;
+
+        blueTimer.isActive = false;
+        blueTimer.elapsedTimeInSeconds = 0;
+        return true;
+    } catch (error) {
+        console.log(`Error in resetAndStopTimers: ${error}`);
+    }
 };

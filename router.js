@@ -40,4 +40,9 @@ router.post('/startTimer', function (req, res) {
     res.send(JSON.stringify(obj));
 });
 
+router.get("/reset",function(req,res){
+    var obj = timer.resetAndStopTimers();
+    res.send(obj);
+});
+
 module.exports = router;
