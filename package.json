@@ -7,6 +7,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "latest",
-    "jshint": "^2.9.5"
+    "jshint": "^2.9.5",
+    "node-stopwatch": "0.0.1"
   }
 }
