@@ -87,6 +87,7 @@ var resetAndStopTimers = function () {
         return true;
     } catch (error) {
         console.log(`Error in resetAndStopTimers: ${error}`);
+        return false;
     }
 };
 
