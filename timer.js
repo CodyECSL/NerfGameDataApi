@@ -22,6 +22,12 @@ module.exports = {
     },
     resetAndStopTimers: function() {
         return resetAndStopTimers();
+    },
+    addTeam: function (teamName) {
+        return addTeam(teamName);
+    },
+    getAllTimers: function () {
+        return teamsArray;
     }
 };
 
@@ -29,6 +35,25 @@ var init = function () {
     teamsArray.forEach(team => {
         console.info(team.teamName);
     });
+};
+
+var addTeam = (teamName) => {
+    if (findTeamByTeamName(teamName) == null) {
+        teamsArray.push(new timeObject(teamName));
+        return findTeamByTeamName(teamName);
+    } else {
+        return `A Team with the name of ${teamName} already exists!`;
+    }
+};
+
+var findTeamByTeamName = (teamName) => {
+    var _team = null;
+    teamsArray.forEach(team => {
+        if (team.teamName == teamName) {
+            _team = team;
+        }
+    });
+    return _team || null ;
 };
 
 var getTimeInSeconds = function (time) {
