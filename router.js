@@ -18,13 +18,9 @@ var timer = require('./timer');
 //     res.sendFile(path + "contact.html");
 // });
 
-router.get("/red",function(req,res){
-    var obj = JSON.stringify(timer.getRedTeamTimer());
-    res.send(obj);
-});
-
-router.get("/blue",function(req,res){
-    var obj = JSON.stringify(timer.getBlueTeamTimer());
+router.get("/status/:Team",function(req,res){
+    var teamVal = req.params.Team;
+    var obj = JSON.stringify(timer.getTimerForTeam(teamVal));
     res.send(obj);
 });
 

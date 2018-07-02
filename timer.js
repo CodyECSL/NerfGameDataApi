@@ -1,11 +1,5 @@
-var timer = null;
 var interval = null;
-
-/* TODO: Currently using 2 hardcoded timer objects.  Need to make
-// a "TeamsArray[]" that can be iterated through.  By default, 
-// Red and Blue Team Timers can be added along with others later. */
-var redTimer = null;
-var blueTimer = null;
+var teamsArray = [new timeObject('Red'), new timeObject('Blue')];
 
 const intervalRefreshValue = 1000;
 
@@ -23,11 +17,8 @@ module.exports = {
         init();
         return startTimerForTeam(teamName);
     },
-    getRedTeamTimer: function() {
-        return redTimer;
-    },
-    getBlueTeamTimer: function() {
-        return blueTimer;
+    getTimerForTeam: function(teamName) {
+        return getTimerForTeam(teamName);
     },
     resetAndStopTimers: function() {
         return resetAndStopTimers();
@@ -35,12 +26,9 @@ module.exports = {
 };
 
 var init = function () {
-    if (redTimer == null) {
-        redTimer = new timeObject('Red');
-    }
-    if (blueTimer == null) {
-        blueTimer = new timeObject('Blue');
-    }
+    teamsArray.forEach(team => {
+        console.info(team.teamName);
+    });
 };
 
 var getTimeInSeconds = function (time) {
@@ -55,23 +43,27 @@ var getTimeDifferenceInSeconds = function (time) {
 
 // TO DO: Break apart this function.  It's doing too many actions.
 var startTimerForTeam = function (teamName) {
-    var activeTimerObject = null;
-    var alternateTimerObject = null;
+    var activeTeam = null;
 
-    if (teamName == 'Red') {
-        activeTimerObject = redTimer;
-        alternateTimerObject = blueTimer;
-    } else {
-        activeTimerObject = blueTimer;
-        alternateTimerObject = redTimer;
-    }
+    teamsArray.forEach(team => {
+        if (team.teamName == teamName) {
+            activeTeam = team;
+            team.isActive = true;
+            team.timerStartedAt = Date.now();
+        } else {
+            deactivateTeam(team);
+        }
+    });
 
-    alternateTimerObject.isActive = false;
-    activeTimerObject.isActive = true;
-    activeTimerObject.timerStartedAt = Date.now();
     clearInterval(interval);
-    startTimerInterval(activeTimerObject);  
-    return activeTimerObject;
+    startTimerInterval(activeTeam);  
+    return activeTeam;
+};
+
+// TODO: Expound on what "deactivating" a team consists of.  If it's
+// just marking the team as inactive, then remove this function.
+var deactivateTeam = (teamTimer) => {
+    teamTimer.isActive = false;
 };
 
 var startTimerInterval = (teamTimer) => {
@@ -86,14 +78,24 @@ var startTimerInterval = (teamTimer) => {
 // TODO: Rename
 var resetAndStopTimers = function () {
     try {
-        redTimer.isActive = false;
-        redTimer.elapsedTimeInSeconds = 0;
-
-        blueTimer.isActive = false;
-        blueTimer.elapsedTimeInSeconds = 0;
+        teamsArray.forEach(team => {
+            team.elapsedTimeInSeconds = 0;
+            team.isActive = false;
+            team.timerStartedAt = null;
+    });
         clearInterval(interval);
         return true;
     } catch (error) {
         console.log(`Error in resetAndStopTimers: ${error}`);
     }
+};
+
+var getTimerForTeam = (teamName) => {
+    var teamFound = null;
+    teamsArray.forEach(team => {
+        if (team.teamName == teamName) {
+            teamFound = team;
+        }
+    });
+    return teamFound != null ? teamFound : `Team ${teamName} was not found.`;
 };
