@@ -1,4 +1,5 @@
 var timer = null;
+var interval = null;
 
 /* TODO: Currently using 2 hardcoded timer objects.  Need to make
 // a "TeamsArray[]" that can be iterated through.  By default, 
@@ -65,27 +66,20 @@ var startTimerForTeam = function (teamName) {
         alternateTimerObject = redTimer;
     }
 
-    if (!activeTimerObject.isActive)
-    {
-        activeTimerObject.isActive = true;
-        activeTimerObject.timerStartedAt = Date.now();
-        startTimerInterval(activeTimerObject);  
-    }
     alternateTimerObject.isActive = false;
+    activeTimerObject.isActive = true;
+    activeTimerObject.timerStartedAt = Date.now();
+    clearInterval(interval);
+    startTimerInterval(activeTimerObject);  
     return activeTimerObject;
 };
 
-var startTimerInterval = function (teamTimerObject) {
-    var interval = setInterval(function () {
-        if (teamTimerObject.isActive) {
-            console.info(teamTimerObject);
-            // This isn't the most accurate way of tracking elapsed time
-            // but is sufficient for now. 
-            teamTimerObject.elapsedTimeInSeconds++; 
-        } else {
-            console.info(`Stopping timer for team: ${teamTimerObject.teamName}`);
-            clearInterval(interval);
-        }
+var startTimerInterval = (teamTimer) => {
+    interval = setInterval(() => {
+        // This isn't the most accurate way of tracking elapsed time
+        // but is sufficient for now. 
+        teamTimer.elapsedTimeInSeconds++; 
+        console.info(teamTimer);
     }, intervalRefreshValue);
 };
 
@@ -97,6 +91,7 @@ var resetAndStopTimers = function () {
 
         blueTimer.isActive = false;
         blueTimer.elapsedTimeInSeconds = 0;
+        clearInterval(interval);
         return true;
     } catch (error) {
         console.log(`Error in resetAndStopTimers: ${error}`);
