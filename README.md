@@ -20,4 +20,4 @@ Bomb Run:
 3. Run "npm install" and wait several secconds.  This will look at the package.json file and install all dependencies.
 4. Run "node Server.js" (If doing development, instead run "nodemon Server.js" to automatically restart the server upon file changes.)
 
-This will start the server on Port 3000 as of now.
+This will try to start the server based on an automatically assigned Port (e.g. Heroku) or will default to 3000.
