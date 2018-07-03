@@ -1,6 +1,18 @@
 # KingOfTheHill
 Node and Express JS server for a King of the Hill game type.  This is designed for the DFW Nerf group.
 
+# Other Games Types
+As of now, this is currently set to track data for a King of the Hill game type but other game types are desired.  Examples of these are:
+
+Seals: 
+- Name of every Seal player
+- Lives of each Seal
+- Remaining time
+
+Bomb Run:
+- Time remaining to place bomb before round is over.
+- Alert when bomb is placed
+- Time remaining before bomb is set off
 
 # How to start
 1. Ensure Node is installed on your machine.
