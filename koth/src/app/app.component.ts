@@ -8,23 +8,40 @@ var result = null;
 })
 
 export class AppComponent implements OnInit, OnDestroy {
-  text = '';
+  red = 'red';
+  blue = 'blue';
 
   ngOnInit() {this.startTimerInterval();}
   ngOnDestroy() {}
 
+  redClick (event: any) {
+    fetch('https://secret-taiga-31277.herokuapp.com/startTimer/Red')
+  };
+
+  blueClick (event: any) {
+    fetch('https://secret-taiga-31277.herokuapp.com/startTimer/Blue');
+  };
+
+  resetClick (event: any) {
+    fetch('https://secret-taiga-31277.herokuapp.com/reset');
+  };
+
   private startTimerInterval = () => {
     setInterval(() => {
-      fetch('https://secret-taiga-31277.herokuapp.com/status/Red')
+      fetch('https://secret-taiga-31277.herokuapp.com/status/')
       .then ((response) => {
         return response.json()
       })
       .then((response) => {
-        let name = response.teamName;
-        let seconds = response.elapsedTimeInSeconds;
-        this.text = `Team ${name} has controlled for ${seconds} seconds!`;
-        return name;
+        response.forEach(element => {
+          if (element.teamName == 'Red') {
+            this.red = `Team ${element.teamName} has controlled for ${element.elapsedTimeInSeconds} seconds!`
+          } else {
+            this.blue = `Team ${element.teamName} has controlled for ${element.elapsedTimeInSeconds} seconds!`
+          }
+        });
       })
     }, 1000);
   };
 }
+
