@@ -14,6 +14,13 @@ Bomb Run:
 - Alert when bomb is placed
 - Time remaining before bomb is set off
 
+# Desired Future Features
+- Integrate a DB (e.g. Mongo) that can track data for multiple matches
+- Create a Router file for each game type
+- QR Code Generation: Server will create a QR code for a new game.  Users can scan the QR Code to join the new game and sync with the server.
+- Create User Profile so Server and Users can view their data over time. This would also help subsribe a user to a game when scanning a QR code
+- Add more game types
+
 # How to start
 1. Ensure Node is installed on your machine.
 2. Navigate to the project folder in your Terminal/Command Prompt.
