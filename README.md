@@ -30,3 +30,6 @@ Bomb Run:
 4. Run "node Server.js" (If doing development, instead run "nodemon Server.js" to automatically restart the server upon file changes.)
 
 This will try to start the server based on an automatically assigned Port (e.g. Heroku) or will default to 3000.
+
+# Deployment
+This Node project can be deployed on a free instance in Heroku.  For now, individual groups can deploy their own instance of the API to track their group's games.  In the future, a DB will be included to allow multiple groups to use the same instance of the API.
