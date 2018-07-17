@@ -1,4 +1,6 @@
 # KingOfTheHill
+*NOTE: This project will eventually be renamed as to support multiple game types.*
+
 Node and Express JS server for a King of the Hill game type.  This is designed for the DFW Nerf group.
 
 # Other Games Types
