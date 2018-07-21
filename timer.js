@@ -1,5 +1,5 @@
 var interval = null;
-var teamsArray = [new timeObject('red'), new timeObject('blue'), new timeObject('green'), new timeObject('yellow')];
+var teamsArray = [new timeObject('Red'), new timeObject('Blue'), new timeObject('Green'), new timeObject('Yellow')];
 
 const intervalRefreshValue = 1000;
 
