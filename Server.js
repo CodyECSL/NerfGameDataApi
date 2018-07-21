@@ -1,7 +1,7 @@
 var express = require("express");
 var app = express();
 var router = express.Router();
-var routerClass = require('./router');
+var kothRoute = require("./kothRoute")
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -17,9 +17,10 @@ router.use(function (req,res,next) {
   next();
 });
 
-app.use("/",router);
-app.use("/", routerClass);
+// Adds a route to the root path of the URL
+app.use("/", kothRoute);
 
+// This default path returns all the endpoints available in this app
 app.get("/", function (req, res) {
   console.info(apiList);
   res.send(apiList);
@@ -28,5 +29,5 @@ app.get("/", function (req, res) {
 apiList = listEndpoints(app);
 
 app.listen(process.env.PORT || 3000,function(){
-  console.log("Live at Port 3000");
+  console.log(`Live at Port ${this.address().port}`);
 });
