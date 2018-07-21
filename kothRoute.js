@@ -3,12 +3,12 @@ var app = express();
 var router = express.Router();
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
-var path = __dirname + '/views/';
+//var path = __dirname + '/views/';
 var timer = require('./timer');
 
 // NOTE: Many calls that should be POST/PUT are set to get
 // for ease of testing in a browser.  Once this project is
-// in an "Alpha" phase, then change the endpoints to the
+// in a "Beta" phase, then change the endpoints to the
 // appropriate HTTP Method
 
 router.get("/status/",function(req,res){
@@ -35,13 +35,24 @@ router.post('/startTimer', function (req, res) {
 });
 
 router.get("/reset",function(req,res){
-    var obj = timer.resetAndStopTimers();
+    var obj = timer.resetTimers();
+    res.send(obj);
+});
+
+router.get("/stopTimers",function(req,res){
+    var obj = timer.stopTimers();
     res.send(obj);
 });
 
 router.get('/addTeam/:Team', function (req, res) {
     var teamVal = req.params.Team;
     var obj = timer.addTeam(teamVal);
+    res.send(JSON.stringify(obj));
+});
+
+router.get('/removeTeam/:Team', function (req, res) {
+    var teamVal = req.params.Team;
+    var obj = timer.removeTeam(teamVal);
     res.send(JSON.stringify(obj));
 });
 

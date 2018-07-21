@@ -1,5 +1,5 @@
 var interval = null;
-var teamsArray = [new timeObject('Red'), new timeObject('Blue')];
+var teamsArray = [new timeObject('red'), new timeObject('blue'), new timeObject('green'), new timeObject('yellow')];
 
 const intervalRefreshValue = 1000;
 
@@ -20,14 +20,20 @@ module.exports = {
     getTimerForTeam: function(teamName) {
         return getTimerForTeam(teamName);
     },
-    resetAndStopTimers: function() {
-        return resetAndStopTimers();
+    resetTimers: function() {
+        return resetTimers();
+    },
+    stopTimers: function() {
+        return stopTimers();
     },
     addTeam: function (teamName) {
         return addTeam(teamName);
     },
     getAllTimers: function () {
         return teamsArray;
+    },
+    removeTeam: function (teamName) {
+        return removeTeam(teamName);
     }
 };
 
@@ -100,21 +106,29 @@ var startTimerInterval = (teamTimer) => {
     }, intervalRefreshValue);
 };
 
-// TODO: Rename
-var resetAndStopTimers = function () {
+var resetTimers = function () {
     try {
         teamsArray.forEach(team => {
             team.elapsedTimeInSeconds = 0;
             team.isActive = false;
             team.timerStartedAt = null;
     });
-        clearInterval(interval);
-        return true;
+        return stopTimers();
     } catch (error) {
-        console.log(`Error in resetAndStopTimers: ${error}`);
+        console.log(`Error in resetTimers: ${error}`);
         return false;
     }
 };
+
+var stopTimers = () => {
+    try {
+        clearInterval(interval);
+        return true;        
+    } catch (error) {
+        console.log(`Error in stopTimers: ${error}`);
+        return false;
+    }
+}
 
 var getTimerForTeam = (teamName) => {
     var teamFound = null;
@@ -125,3 +139,28 @@ var getTimerForTeam = (teamName) => {
     });
     return teamFound != null ? teamFound : `Team ${teamName} was not found.`;
 };
+
+var removeTeam = (teamNameToRemove) => {
+    try {
+        let newTeamsArray = [];
+        let isTeamToRemoveFound = false;
+        teamsArray.forEach(team => {
+            if (team.teamName === teamNameToRemove) {
+                console.log(`Removed ${teamNameToRemove}`);
+                isTeamToRemoveFound = true;
+            } else {
+                newTeamsArray.push(team);
+            }
+        });
+
+        if (isTeamToRemoveFound) {
+            teamsArray = newTeamsArray;
+            return true;
+        }
+        console.log(`Did not find team to remove: ${teamNameToRemove}`)
+        return false;
+    } catch (error) {
+        console.log(`Error in removeTeam: ${error}`)
+        return false;
+    }
+}

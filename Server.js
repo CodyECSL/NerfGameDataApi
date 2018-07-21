@@ -18,7 +18,7 @@ router.use(function (req,res,next) {
 });
 
 // Adds a route to the root path of the URL
-app.use("/", kothRoute);
+app.use("/koth", kothRoute);
 
 // This default path returns all the endpoints available in this app
 app.get("/", function (req, res) {
@@ -28,6 +28,8 @@ app.get("/", function (req, res) {
 
 apiList = listEndpoints(app);
 
-app.listen(process.env.PORT || 3000,function(){
-  console.log(`Live at Port ${this.address().port}`);
+let port = process.env.PORT || 3000;
+
+app.listen(port,function(){
+  console.log(`Live at Port ${port}`);
 });
