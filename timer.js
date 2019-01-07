@@ -30,7 +30,8 @@ module.exports = {
         return addTeam(teamName);
     },
     getAllTimers: function () {
-        return teamsArray;
+        // return teamsArray;
+        return returnListOfTeamData();
     },
     removeTeam: function (teamName) {
         return removeTeam(teamName);
@@ -61,6 +62,17 @@ var findTeamByTeamName = (teamName) => {
     });
     return _team || null ;
 };
+
+var returnListOfTeamData = () => {
+    let listOfTeams = {
+        Teams: []
+    };
+    teamsArray.forEach(team => {
+        listOfTeams.Teams.push(team);
+    });
+    console.info(listOfTeams)
+    return listOfTeams;
+}
 
 var getTimeInSeconds = function (time) {
     console.info(`getting time in sec for: ${time}`);
