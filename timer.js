@@ -71,6 +71,8 @@ var returnListOfTeamData = () => {
         listOfTeams.Teams.push(team);
     });
     console.info(listOfTeams)
+    // Sort the array based on Most Points descending
+    teamsArray.sort((a,b) => a.elapsedTimeInSeconds < b.elapsedTimeInSeconds)
     return listOfTeams;
 }
 
