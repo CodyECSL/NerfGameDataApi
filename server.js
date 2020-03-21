@@ -31,6 +31,11 @@ app.get("/", function (req, res) {
   res.send(apiList);
 });
 
+app.get("/loaderio-b771a35315d407b8a35648189abe597d", function (req, res) {
+  const file = `/loaderio-b771a35315d407b8a35648189abe597d.txt`;
+  res.download(file); // Set disposition and send it.
+});
+
 apiList = listEndpoints(app);
 
 let port = process.env.PORT || 3000;
