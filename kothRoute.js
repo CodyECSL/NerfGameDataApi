@@ -22,6 +22,11 @@ router.get("/status/:Team",function(req,res){
     res.send(obj);
 });
 
+router.get("/startGameTimer/",function(req,res){
+    var obj = JSON.stringify(timer.startGameTimer());
+    res.send(obj);
+});
+
 router.get('/startTimer/:Team', function (req, res) {
     var teamVal = req.params.Team;
     var obj = timer.startTimer(teamVal);

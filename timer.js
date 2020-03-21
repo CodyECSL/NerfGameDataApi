@@ -1,6 +1,9 @@
 var interval = null;
-var teamsArray = [new timeObject('Red'), new timeObject('Blue'), new timeObject('Green'), new timeObject('Yellow')];
+var teamsArray = [new timeObject('Red'), new timeObject('Blue')];
+var gameTimerInterval = null;
+var gameTimeElapsed = 0.0;
 
+const gameTimerIntervalRefreshValue = 500;
 const intervalRefreshValue = 1000;
 
 // TODO: Rename this object
@@ -16,6 +19,10 @@ module.exports = {
     startTimer: function (teamName) {
         init();
         return startTimerForTeam(teamName);
+    },
+    startGameTimer: function () {
+        // return teamsArray;
+        return startGameTimer();
     },
     getTimerForTeam: function(teamName) {
         return getTimerForTeam(teamName);
@@ -44,6 +51,15 @@ var init = function () {
     });
 };
 
+var startGameTimer = function () {
+    if (null == gameTimerInterval) {
+        gameTimerInterval = setInterval(() => {
+            gameTimeElapsed ++;
+        }, intervalRefreshValue);
+    }
+
+};
+
 var addTeam = (teamName) => {
     if (findTeamByTeamName(teamName) == null) {
         teamsArray.push(new timeObject(teamName));
@@ -65,7 +81,9 @@ var findTeamByTeamName = (teamName) => {
 
 var returnListOfTeamData = () => {
     let listOfTeams = {
-        Teams: []
+        Teams: [],
+        ElapsedGameTime: gameTimeElapsed,
+        ElapsedGameTimeFormatted: getTimeFormatFromSeconds(gameTimeElapsed)
     };
     teamsArray.forEach(team => {
         listOfTeams.Teams.push(team);
@@ -86,6 +104,13 @@ var getTimeDifferenceInSeconds = function (time) {
     return diff;
 };
 
+var getTimeFormatFromSeconds = (seconds) => {
+    var date = new Date(0);
+    date.setSeconds(seconds); // specify value for SECONDS here
+    var timeString = date.toISOString().substr(14, 5);
+    return timeString;
+}
+
 // TO DO: Break apart this function.  It's doing too many actions.
 var startTimerForTeam = function (teamName) {
     var activeTeam = null;
@@ -102,6 +127,7 @@ var startTimerForTeam = function (teamName) {
 
     clearInterval(interval);
     startTimerInterval(activeTeam);  
+    startGameTimer();
     return activeTeam;
 };
 
@@ -127,6 +153,7 @@ var resetTimers = function () {
             team.isActive = false;
             team.timerStartedAt = null;
     });
+        gameTimeElapsed = 0;
         return stopTimers();
     } catch (error) {
         console.log(`Error in resetTimers: ${error}`);
@@ -137,6 +164,8 @@ var resetTimers = function () {
 var stopTimers = () => {
     try {
         clearInterval(interval);
+        clearInterval(gameTimerInterval);
+        gameTimerInterval = null;
         return true;        
     } catch (error) {
         console.log(`Error in stopTimers: ${error}`);
