@@ -34,7 +34,7 @@ app.get("/", function (req, res) {
 app.get("/loaderio-b771a35315d407b8a35648189abe597d", function (req, res) {
   const file = `${__dirname}/loaderio-b771a35315d407b8a35648189abe597d.txt`;
   console.info(`File: ${file}`)
-  res.download(file); // Set disposition and send it.
+  res.sendFile(file); // Set disposition and send it.
 });
 
 apiList = listEndpoints(app);
