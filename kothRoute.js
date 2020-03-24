@@ -33,6 +33,12 @@ router.get('/startTimer/:Team', function (req, res) {
     res.send(JSON.stringify(obj));
 });
 
+router.get('/setPointsToWin/:points', function (req, res) {
+    var points = req.params.points;
+    var obj = timer.setPointsToWin(points);
+    res.send(JSON.stringify(obj));
+});
+
 router.post('/startTimer', function (req, res) {
     var teamVal = req.body.Team;
     var obj = timer.startTimer(teamVal);

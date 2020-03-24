@@ -2,6 +2,7 @@ var interval = null;
 var teamsArray = [new timeObject('Red'), new timeObject('Blue')];
 var gameTimerInterval = null;
 var gameTimeElapsed = 0.0;
+var pointsToWin = 300;
 
 const gameTimerIntervalRefreshValue = 500;
 const intervalRefreshValue = 1000;
@@ -16,6 +17,9 @@ function timeObject (teamName) {
 }
 
 module.exports = {
+    setPointsToWin: function (points) {
+        return setPointsToWin(points);
+    },
     startTimer: function (teamName) {
         init();
         return startTimerForTeam(teamName);
@@ -60,6 +64,15 @@ var startGameTimer = function () {
 
 };
 
+var setPointsToWin = (points) => {
+    points = parseInt(points);
+    if (NaN != points) {
+        console.info(`Setting points to: ${points}`)
+        pointsToWin = points;
+    }
+    return `Points to win: ${pointsToWin}`
+}
+
 var addTeam = (teamName) => {
     if (findTeamByTeamName(teamName) == null) {
         teamsArray.push(new timeObject(teamName));
@@ -81,9 +94,11 @@ var findTeamByTeamName = (teamName) => {
 
 var returnListOfTeamData = () => {
     let listOfTeams = {
-        Teams: [],
         ElapsedGameTime: gameTimeElapsed,
-        ElapsedGameTimeFormatted: getTimeFormatFromSeconds(gameTimeElapsed)
+        ElapsedGameTimeFormatted: getTimeFormatFromSeconds(gameTimeElapsed),
+        PointsToWin: pointsToWin,
+        Teams: []
+        
     };
     teamsArray.forEach(team => {
         listOfTeams.Teams.push(team);
