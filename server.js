@@ -31,11 +31,11 @@ app.get("/", function (req, res) {
   res.send(apiList);
 });
 
-app.get("/loaderio-b771a35315d407b8a35648189abe597d", function (req, res) {
-  const file = `${__dirname}/loaderio-b771a35315d407b8a35648189abe597d.txt`;
-  console.info(`File: ${file}`)
-  res.sendFile(file); // Set disposition and send it.
-});
+// app.get("/loaderio-b771a35315d407b8a35648189abe597d", function (req, res) {
+//   const file = `${__dirname}/loaderio-b771a35315d407b8a35648189abe597d.txt`;
+//   console.info(`File: ${file}`)
+//   res.sendFile(file); // Set disposition and send it.
+// });
 
 apiList = listEndpoints(app);
 
