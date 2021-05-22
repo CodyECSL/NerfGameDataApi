@@ -41,6 +41,8 @@ apiList = listEndpoints(app);
 
 let port = process.env.PORT || 3000;
 
+app.set("port", port);
+console.log("starting to listen")
 app.listen(port,function(){
   console.log(`Live at Port ${port}`);
 });
