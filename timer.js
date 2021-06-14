@@ -37,6 +37,9 @@ module.exports = {
     stopTimers: function() {
         return stopTimers();
     },
+    stopTeamTimers: function() {
+        return stopTeamTimers();
+    },
     addTeam: function (teamName) {
         return addTeam(teamName);
     },
@@ -184,6 +187,16 @@ var stopTimers = () => {
         return true;        
     } catch (error) {
         console.log(`Error in stopTimers: ${error}`);
+        return false;
+    }
+}
+
+var stopTeamTimers = () => {
+    try {
+        clearInterval(interval);
+        return true;        
+    } catch (error) {
+        console.log(`Error in stopTeamTimers: ${error}`);
         return false;
     }
 }

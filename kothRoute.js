@@ -55,6 +55,11 @@ router.get("/stopTimers",function(req,res){
     res.send(obj);
 });
 
+router.get("/stopTeamTimers",function(req,res){
+    var obj = timer.stopTeamTimers();
+    res.send(obj);
+});
+
 router.get('/addTeam/:Team', function (req, res) {
     var teamVal = req.params.Team;
     var obj = timer.addTeam(teamVal);
