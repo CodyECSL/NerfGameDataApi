@@ -9,6 +9,7 @@
     "express": "*",
     "express-list-endpoints": "^3.0.1",
     "jshint": "^2.12.0",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "shelljs": ">=0.8.5"
   }
 }
